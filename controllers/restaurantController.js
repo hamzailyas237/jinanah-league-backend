@@ -6,6 +6,7 @@ const { ObjectId } = require('mongodb');
 
 const restaurantControllers = {
     restaurants: (req, res) => {
+        console.log(req.body);
         const { name, location, phone, reviews, dishes } = req.body
         if (!name || !location || !phone || !reviews || !dishes) {
             res.status(400).json({
