@@ -32,21 +32,30 @@ const restaurantControllers = {
     review: (req, res) => {
         const { id } = req.body
         const _id = new ObjectId(id);
-        const userReview = { reviewer: req.body.reviewer, review: req.body.review }
-        productModel.update({ _id },
-            { $push: { reviews: userReview } })
-            .then(review => {
-                res.status(200).json({
-                    message: 'Review Added',
-                    review
-                })
+        const { reviewer, review, rating } = req.body
+        if (!reviewer && !review && !rating) {
+            res.status(400).json({
+                message: 'Required fields are missing',
             })
-            .catch(err => {
-                console.log(err);
-                res.status(500).json({
-                    message: 'Something went wrong in adding review'
+            return
+        }
+        else {
+            const userReview = { reviewer, review, rating }
+            productModel.update({ _id },
+                { $push: { reviews: userReview } })
+                .then(review => {
+                    res.status(200).json({
+                        message: 'Review Added',
+                        review
+                    })
                 })
-            })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).json({
+                        message: 'Something went wrong in adding review'
+                    })
+                })
+        }
     },
 
     addProduct: (req, res) => {
@@ -76,11 +85,11 @@ const restaurantControllers = {
 
     getAllRestaurants: (req, res) => {
         productModel.find({}).then(data => {
-                res.status(200).json({
-                    message: 'Get Restuarants',
-                    data
-                })
+            res.status(200).json({
+                message: 'Get Restuarants',
+                data
             })
+        })
             .catch(err => {
                 res.status(500).json({
                     message: 'Something went wrong in adding product'

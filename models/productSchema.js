@@ -21,6 +21,7 @@ const productSchema = mongoose.Schema({
     reviews: [{
         reviewer: String,
         review: String,
+        rating: Number
     }],
     dishes: [{
         name: String,
