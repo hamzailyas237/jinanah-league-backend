@@ -6,7 +6,6 @@ const { ObjectId } = require('mongodb');
 
 const restaurantControllers = {
     restaurants: (req, res) => {
-        console.log(req.body);
         const { name, location, phone, reviews, dishes } = req.body
         if (!name || !location || !phone || !reviews || !dishes) {
             res.status(400).json({
@@ -92,7 +91,21 @@ const restaurantControllers = {
         })
             .catch(err => {
                 res.status(500).json({
-                    message: 'Something went wrong in adding product'
+                    message: 'Something went wrong in getting products'
+                })
+            })
+    }
+    ,
+    getSingleRestaurant: (req, res) => {
+        productModel.findById(req?.params?.id).then(data => {
+            res.status(200).json({
+                message: 'Get Single Restaurant',
+                data
+            })
+        })
+            .catch(err => {
+                res.status(500).json({
+                    message: 'Something went wrong in getting a product'
                 })
             })
     }

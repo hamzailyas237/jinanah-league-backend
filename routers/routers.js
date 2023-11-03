@@ -5,13 +5,14 @@
 const express = require("express")
 const router = express.Router()
 
-const { restaurants, review, addProduct, getAllRestaurants } = require('../controllers/restaurantController')
+const { restaurants, review, addProduct, getAllRestaurants, getSingleRestaurant } = require('../controllers/restaurantController')
 
 
 router.post('/restaurants', restaurants)
 router.put('/review', review)
 router.put('/product', addProduct)
 router.get('/restaurants', getAllRestaurants)
+router.get('/restaurant/:id', getSingleRestaurant)
 
 
 
