@@ -1,7 +1,6 @@
 
 
 const productModel = require('../models/productSchema');
-var mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 
 const restaurantControllers = {
@@ -60,7 +59,6 @@ const restaurantControllers = {
     addProduct: (req, res) => {
         const { id } = req.body
         const _id = new ObjectId(id);
-        // const checkId = mongoose.Types.ObjectId.isValid(_id);
         const product = {
             name: req.body.name,
             image: req.body.image,

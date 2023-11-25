@@ -15,8 +15,7 @@ const paymentController = {
         // We have to send price after converting into decimal therefore we have mutiplied by 100
         unit_amount: product?.price * 100,
       },
-      quantity: 1,
-      // quantity: product?.quantity
+      quantity: product?.quantity
     }));
 
     const session = await stripe.checkout.sessions.create({

@@ -28,7 +28,9 @@ const productSchema = mongoose.Schema({
         image: String,
         description: String,
         price: Number,
+        isActive: Boolean
     }],
+    isActive: Boolean
 })
 const productModel = mongoose.model('restuarant', productSchema)
 
