@@ -28,7 +28,7 @@ const productSchema = mongoose.Schema({
         image: String,
         description: String,
         price: Number,
-        isActive: Boolean
+        isAvailable: Boolean
     }],
     isActive: Boolean
 })
