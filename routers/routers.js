@@ -12,6 +12,7 @@ const {
 } = require("../controllers/restaurantController");
 const { payment } = require("../controllers/paymentController");
 const { createOrder, updateOrder } = require("../controllers/orderController");
+const { signup, login } = require("../controllers/authController");
 
 router.post("/restaurants", restaurants);
 router.put("/review", review);
@@ -21,5 +22,7 @@ router.get("/restaurant/:id", getSingleRestaurant);
 router.post("/create-checkout-session", payment);
 router.post("/order", createOrder);
 router.patch("/order", updateOrder);
+router.post("/signup", signup);
+router.post("/login", login);
 
 module.exports = router;
