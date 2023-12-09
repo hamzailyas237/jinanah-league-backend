@@ -14,7 +14,6 @@ const googleUserSchema = mongoose.Schema({
   },
   photo: {
     type: String,
-    required: true,
   },
   uid: {
     type: String,
@@ -26,5 +25,5 @@ const googleUserSchema = mongoose.Schema({
   },
 });
 
-const googleUserModel = mongoose.model("user", googleUserSchema);
+const googleUserModel = mongoose.model("google-user", googleUserSchema);
 module.exports = googleUserModel;

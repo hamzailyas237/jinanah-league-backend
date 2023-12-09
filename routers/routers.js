@@ -24,6 +24,6 @@ router.post("/order", createOrder);
 router.patch("/order", updateOrder);
 router.post("/signup", signup);
 router.post("/login", login);
-// router.post("/google-auth", googleAuth);
+router.post("/google-auth", googleAuth);
 
 module.exports = router;
