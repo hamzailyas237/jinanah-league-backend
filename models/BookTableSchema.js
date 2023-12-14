@@ -17,10 +17,6 @@ const bookTableSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  products: {
-    type: Array,
-    required: true,
-  },
   phone: {
     type: String,
     required: true,
