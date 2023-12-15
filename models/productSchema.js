@@ -1,37 +1,48 @@
-
-
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true
+  name: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+  },
+  reviews: [
+    {
+      reviewer: String,
+      review: String,
+      rating: Number,
     },
-    location: {
-        type: String,
-        required: true
+  ],
+  dishes: [
+    {
+      name: String,
+      image: String,
+      description: String,
+      price: Number,
+      isAvailable: Boolean,
     },
-    phone: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String,
-    },
-    reviews: [{
-        reviewer: String,
-        review: String,
-        rating: Number
-    }],
-    dishes: [{
-        name: String,
-        image: String,
-        description: String,
-        price: Number,
-        isAvailable: Boolean
-    }],
-    isActive: Boolean
-})
-const productModel = mongoose.model('restuarant', productSchema)
+  ],
+  total_seats: {
+    type: Number,
+  },
+  booked_seats: {
+    type: Number,
+  },
+  remaining_seats: {
+    type: Number,
+  },
+  isActive: Boolean,
+});
+const productModel = mongoose.model("restuarant", productSchema);
 
-module.exports = productModel
+module.exports = productModel;

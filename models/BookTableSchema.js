@@ -6,8 +6,14 @@ const bookTableSchema = mongoose.Schema({
     required: true,
   },
   time: {
-    type: String,
-    required: true,
+    from: {
+      type: String,
+      required: true,
+    },
+    to: {
+      type: String,
+      required: true,
+    },
   },
   no_of_seats: {
     type: Number,
@@ -24,6 +30,10 @@ const bookTableSchema = mongoose.Schema({
   additional_info: {
     type: String,
   },
+  restaurant: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "productModel",
+  },
 });
-// const bookTable = mongoose.model('table', bookTableSchema)
-// module.exports = bookTable
+const bookTableModel = mongoose.model("table-booking", bookTableSchema);
+module.exports = bookTableModel;

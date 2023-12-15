@@ -13,6 +13,7 @@ const {
 const { payment } = require("../controllers/paymentController");
 const { createOrder, updateOrder } = require("../controllers/orderController");
 const { signup, login, googleAuth } = require("../controllers/authController");
+const { bookTable } = require("../controllers/bookTableController");
 
 router.post("/restaurants", restaurants);
 router.put("/review", review);
@@ -25,5 +26,6 @@ router.patch("/order", updateOrder);
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/google-auth", googleAuth);
+router.post("/book-table", bookTable);
 
 module.exports = router;
