@@ -37,11 +37,14 @@ const productSchema = mongoose.Schema({
   },
   booked_seats: {
     type: Number,
+    default: 0,
   },
   remaining_seats: {
     type: Number,
   },
-  isActive: Boolean,
+  isActive: {
+    type: Boolean,
+  },
 });
 const productModel = mongoose.model("restuarant", productSchema);
 
