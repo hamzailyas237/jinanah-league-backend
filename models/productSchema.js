@@ -35,13 +35,6 @@ const productSchema = mongoose.Schema({
   total_seats: {
     type: Number,
   },
-  booked_seats: {
-    type: Number,
-    default: 0,
-  },
-  remaining_seats: {
-    type: Number,
-  },
   isActive: {
     type: Boolean,
   },
