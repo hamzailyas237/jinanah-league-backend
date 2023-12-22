@@ -12,7 +12,12 @@ const {
 } = require("../controllers/restaurantController");
 const { payment } = require("../controllers/paymentController");
 const { createOrder, updateOrder } = require("../controllers/orderController");
-const { signup, login, googleAuth } = require("../controllers/authController");
+const {
+  signup,
+  login,
+  googleAuth,
+  updateUser,
+} = require("../controllers/authController");
 const { bookTable } = require("../controllers/bookTableController");
 
 router.post("/restaurants", restaurants);
@@ -27,5 +32,6 @@ router.post("/signup", signup);
 router.post("/login", login);
 router.post("/google-auth", googleAuth);
 router.post("/book-table", bookTable);
+router.patch("/user", updateUser);
 
 module.exports = router;

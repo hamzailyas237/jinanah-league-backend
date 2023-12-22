@@ -98,8 +98,8 @@ const authController = {
   },
 
   googleAuth: (req, res) => {
-
-    const { fullname, phone, email, photo, uid, firebase_access_token } = req.body;
+    const { fullname, phone, email, photo, uid, firebase_access_token } =
+      req.body;
 
     if (!fullname || !email || !photo || !uid || !firebase_access_token) {
       res.status(400).json({
@@ -108,58 +108,126 @@ const authController = {
       return;
     }
 
+    userModel
+      .findOne({ email })
+      .then((user) => {
+        var token = jwt.sign({ user }, process.env.JWT_KEY);
 
-    userModel.findOne({ email }).then(user => {
-      var token = jwt.sign({ user }, process.env.JWT_KEY);
-
-      if (user) {
-        res.status(200).json({
-          message: 'User logged in successfully',
-          user,
-          token
-        })
-      }
-      else {
-        googleUserModel.findOne({ email }).then((user) => {
-          if (user) {
-            res.status(200).json({
-              message: 'User logged in successfully',
-              user,
-              token
+        if (user) {
+          res.status(200).json({
+            message: "User logged in successfully",
+            user,
+            token,
+          });
+        } else {
+          googleUserModel
+            .findOne({ email })
+            .then((user) => {
+              if (user) {
+                res.status(200).json({
+                  message: "User logged in successfully",
+                  user,
+                  token,
+                });
+              } else {
+                const userToCreate = {
+                  fullname,
+                  phone,
+                  email,
+                  photo,
+                  uid,
+                  firebase_access_token,
+                };
+                googleUserModel
+                  .create(userToCreate)
+                  .then((user) => {
+                    res.status(200).json({
+                      message: "User signed up successfully",
+                      user,
+                    });
+                  })
+                  .catch((err) => {
+                    res.status(500).json({
+                      message: "Something went wrong",
+                    });
+                  });
+              }
             })
-          }
-          else {
-            const userToCreate = {
-              fullname,
-              phone,
-              email,
-              photo,
-              uid,
-              firebase_access_token
-            }
-            googleUserModel.create(userToCreate).then(user => {
-              res.status(200).json({
-                message: 'User signed up successfully',
-                user
-              })
-            }).catch(err => {
+            .catch((err) => {
               res.status(500).json({
-                message: "Something went wrong 1",
-              })
-            })
-          }
-        }).catch(err => {
-          res.status(500).json({
-            message: "Something went wrong 2",
-          })
-        })
-      }
-    }).catch(err => {
-      res.status(500).json({
-        message: "Something went wrong 3",
+                message: "Something went wrong",
+              });
+            });
+        }
       })
-    })
-  }
+      .catch((err) => {
+        res.status(500).json({
+          message: "Something went wrong",
+        });
+      });
+  },
+  updateUser: (req, res) => {
+    const { email, fullname, phone, newPassword, currentPassword } = req.body;
+    if (!newPassword && !currentPassword) {
+      if (!email || !fullname || !phone) {
+        res.status(400).json({
+          message: "Required fields are missing",
+        });
+        return;
+      }
+
+      userModel
+        .findOneAndUpdate({ email }, req.body, { new: true })
+        .then((user) => {
+          res.status(200).json({
+            message: "User updated successfully",
+            user,
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            message: "Something went wrong",
+          });
+        });
+    } else {
+      userModel
+        .findOne({ email })
+        .then(async (user) => {
+          const isPasswordMatch = await bcrypt.compare(
+            currentPassword,
+            user.password
+          );
+          if (isPasswordMatch) {
+            const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+            userModel
+              .findOneAndUpdate(
+                { email },
+                { password: hashedNewPassword },
+                { new: true }
+              )
+              .then((updatedPassword) => {
+                res.status(200).json({
+                  message: "Password updated successfully",
+                });
+              })
+              .catch((err) => {
+                res.status(500).json({
+                  message: "Something went wrong",
+                });
+              });
+          } else {
+            res.status(400).json({
+              message: "Current password is incorrect",
+            });
+          }
+        })
+        .catch((err) => {
+          res.status(500).json({
+            message: "Something went wrong..",
+          });
+        });
+    }
+  },
 };
 
 module.exports = authController;
