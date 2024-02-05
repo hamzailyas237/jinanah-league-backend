@@ -16,7 +16,6 @@ mongoose.connect(process.env.BASE_URL)
         console.log(err);
     })
 
-app.use(express.json({ limit: "5mb" }));
 app.use(express.json())
 app.use(cors())
 
