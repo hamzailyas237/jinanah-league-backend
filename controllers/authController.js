@@ -39,9 +39,11 @@ const authController = {
           userModel
             .create(user)
             .then((user) => {
+              var token = jwt.sign({ user }, process.env.JWT_KEY);
               res.status(200).json({
                 message: "User signed up successfully",
                 user,
+                token,
               });
             })
             .catch((err) => {
