@@ -24,6 +24,10 @@ const orderSchema = mongoose.Schema({
     status: {
         type: String,
         default: 'pending'
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 
 })

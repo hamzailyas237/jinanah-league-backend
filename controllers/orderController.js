@@ -2,7 +2,6 @@ const orderModel = require("../models/orderSchema");
 
 const orderController = {
     createOrder: (req, res) => {
-        console.log('req body', req.body);
         const { email, phone, address } = req.body
         if (!email || !phone || !address) {
             res.status(400).json({
@@ -33,6 +32,20 @@ const orderController = {
             .catch(err => {
                 res.status(500).json({
                     message: 'Something went wrong in placing order'
+                })
+            })
+    },
+
+    getOrdersByUserId: (req, res) => {
+        orderModel.find({ userId: req.params.id }).then(order => {
+            res.status(200).json({
+                message: 'Get all Orders ',
+                data: order
+            })
+        })
+            .catch(err => {
+                res.status(500).json({
+                    message: 'Something went wrong in getting orders'
                 })
             })
     }

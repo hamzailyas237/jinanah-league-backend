@@ -11,7 +11,7 @@ const {
   getSingleRestaurant,
 } = require("../controllers/restaurantController");
 const { payment } = require("../controllers/paymentController");
-const { createOrder, updateOrder } = require("../controllers/orderController");
+const { createOrder, updateOrder, getOrdersByUserId } = require("../controllers/orderController");
 const {
   signup,
   login,
@@ -28,6 +28,7 @@ router.get("/restaurant/:id", getSingleRestaurant);
 router.post("/create-checkout-session", payment);
 router.post("/order", createOrder);
 router.patch("/order", updateOrder);
+router.get("/order/:id", getOrdersByUserId);
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/google-auth", googleAuth);
