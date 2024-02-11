@@ -17,6 +17,7 @@ const {
   login,
   googleAuth,
   updateUser,
+  getUsersByRole,
 } = require("../controllers/authController");
 const { bookTable } = require("../controllers/bookTableController");
 
@@ -34,5 +35,6 @@ router.post("/login", login);
 router.post("/google-auth", googleAuth);
 router.post("/book-table", bookTable);
 router.patch("/user", updateUser);
+router.get("/users/:role", getUsersByRole)
 
 module.exports = router;

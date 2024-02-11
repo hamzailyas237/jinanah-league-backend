@@ -168,6 +168,7 @@ const authController = {
         });
       });
   },
+
   updateUser: (req, res) => {
     const { email, fullname, phone, newPassword, currentPassword } = req.body;
     if (!newPassword && !currentPassword) {
@@ -230,6 +231,26 @@ const authController = {
         });
     }
   },
+
+  getUsersByRole: (req, res) => {
+    const { role } = req.params;
+    if (!role) {
+      res.status(400).json({
+        message: "Required fields are missing",
+      });
+      return;
+    }
+
+    userModel.findOne({ role }).then(user => {
+      res.status(200).json({
+        data: user,
+      });
+    }).catch((err) => {
+      res.status(500).json({
+        message: "Something went wrong",
+      });
+    });
+  }
 };
 
 module.exports = authController;
